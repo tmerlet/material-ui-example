@@ -56,7 +56,7 @@ const Exercises = ({
       <Grid item xs>
         <Paper style={styles.Paper}>
           <Typography variant="h6">{title}</Typography>
-          <Typography variant="body" style={{ marginTop: 20 }}>
+          <Typography variant="body1" style={{ marginTop: 20 }}>
             {description}
           </Typography>
         </Paper>

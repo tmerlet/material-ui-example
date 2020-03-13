@@ -38,13 +38,21 @@ class App extends Component {
     });
   };
 
+  onExerciseCreate = exercise => {
+    this.setState(({ exercises }) => {
+      return {
+        exercises: [...exercises, exercise]
+      };
+    });
+  };
+
   render() {
     const exercises = this.getExercisesByGroup();
     const { categorySelected, exercise } = this.state;
 
     return (
       <Container>
-        <Header />
+        <Header muscles={muscles} onExerciseCreate={this.onExerciseCreate} />
         <Exercises
           category={categorySelected}
           exercise={exercise}
