@@ -3,10 +3,17 @@ import {
   Grid,
   List,
   ListItem,
+  ListItemSecondaryAction,
   ListItemText,
   Paper,
-  Typography
+  Typography,
+  IconButton
 } from '@material-ui/core';
+
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+
+import Form from './Form';
 
 const styles = {
   Paper: {
@@ -19,6 +26,8 @@ const styles = {
 };
 
 const Exercises = ({
+  editMode,
+  exercise,
   exercise: {
     description = 'Please select an exercise from the list on the left',
     id,
@@ -26,11 +35,15 @@ const Exercises = ({
   },
   exercises,
   category,
-  onSelect
+  muscles,
+  onSelect,
+  onSelectEdit,
+  onDelete,
+  onEdit
 }) => {
   return (
     <Grid container spacing={3}>
-      <Grid item xs>
+      <Grid item xs={12} sm={6}>
         <Paper style={styles.Paper}>
           {exercises.map(([group, exercises]) =>
             !category || category === group ? (
@@ -45,6 +58,14 @@ const Exercises = ({
                   {exercises.map(({ title, id }) => (
                     <ListItem button key={id} onClick={() => onSelect(id)}>
                       <ListItemText primary={title} />
+                      <ListItemSecondaryAction>
+                        <IconButton onClick={() => onDelete(id)}>
+                          <DeleteIcon />
+                        </IconButton>
+                        <IconButton onClick={() => onSelectEdit(id)}>
+                          <EditIcon />
+                        </IconButton>
+                      </ListItemSecondaryAction>
                     </ListItem>
                   ))}
                 </List>
@@ -53,12 +74,18 @@ const Exercises = ({
           )}
         </Paper>
       </Grid>
-      <Grid item xs>
+      <Grid item xs={12} sm={6}>
         <Paper style={styles.Paper}>
-          <Typography variant="h6">{title}</Typography>
-          <Typography variant="body1" style={{ marginTop: 20 }}>
-            {description}
-          </Typography>
+          {editMode ? (
+            <Form exercise={exercise} muscles={muscles} onSubmit={onEdit} />
+          ) : (
+            <>
+              <Typography variant="h6">{title}</Typography>
+              <Typography variant="body1" style={{ marginTop: 20 }}>
+                {description}
+              </Typography>
+            </>
+          )}
         </Paper>
       </Grid>
     </Grid>

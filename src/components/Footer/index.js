@@ -12,7 +12,7 @@ const Footer = ({ category, muscles, onSelect }) => {
       <Tabs
         value={index}
         onChange={onIndexSelect}
-        centered
+        variant="scrollable"
         indicatorColor="primary"
         textColor="primary"
       >
