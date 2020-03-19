@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { Container } from '@material-ui/core';
 import Header from './Header';
 import Footer from './Footer';
@@ -75,25 +76,27 @@ class App extends Component {
     const { categorySelected, exercise, editMode } = this.state;
 
     return (
-      <Container>
-        <Header muscles={muscles} onExerciseCreate={this.onExerciseCreate} />
-        <Exercises
-          category={categorySelected}
-          editMode={editMode}
-          exercise={exercise}
-          exercises={exercises}
-          muscles={muscles}
-          onDelete={this.handleExerciseDelete}
-          onSelect={this.handleExerciseSelect}
-          onSelectEdit={this.handleExerciseSelectEdit}
-          onEdit={this.handleExerciseEdit}
-        />
-        <Footer
-          muscles={muscles}
-          category={categorySelected}
-          onSelect={this.handleCategorySelected}
-        />
-      </Container>
+      <CssBaseline>
+        <Container>
+          <Header muscles={muscles} onExerciseCreate={this.onExerciseCreate} />
+          <Exercises
+            category={categorySelected}
+            editMode={editMode}
+            exercise={exercise}
+            exercises={exercises}
+            muscles={muscles}
+            onDelete={this.handleExerciseDelete}
+            onSelect={this.handleExerciseSelect}
+            onSelectEdit={this.handleExerciseSelectEdit}
+            onEdit={this.handleExerciseEdit}
+          />
+          <Footer
+            muscles={muscles}
+            category={categorySelected}
+            onSelect={this.handleCategorySelected}
+          />
+        </Container>
+      </CssBaseline>
     );
   }
 }

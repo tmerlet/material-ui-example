@@ -37,13 +37,14 @@ export default class extends Component {
           open={open}
           onClose={this.handleToggle}
           aria-labelledby="form-dialog-title"
+          fullWidth
+          maxWidth="xs"
         >
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            Create a new exercise
+          </DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              To subscribe to this website, please enter your email address
-              here. We will send updates occasionally.
-            </DialogContentText>
+            <DialogContentText>Please fill in the form below</DialogContentText>
             <Form muscles={muscles} onSubmit={this.handleFormSubmit} />
           </DialogContent>
         </Dialog>
