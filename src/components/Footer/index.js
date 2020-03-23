@@ -1,8 +1,17 @@
 import React from 'react';
-import { Paper, Tabs, Tab } from '@material-ui/core';
+import { AppBar, Tabs, Tab } from '@material-ui/core';
 import withWidth from '@material-ui/core/withWidth';
+import { withStyles } from '@material-ui/styles';
 
-const Footer = ({ category, muscles, onSelect, width }) => {
+const styles = theme => ({
+  [theme.breakpoints.down('sm')]: {
+    tab: {
+      minWidth: 'auto'
+    }
+  }
+});
+
+const Footer = ({ category, muscles, onSelect, width, classes }) => {
   console.log(width);
   const index = category ? muscles.indexOf(category) + 1 : 0;
 
@@ -10,23 +19,23 @@ const Footer = ({ category, muscles, onSelect, width }) => {
     onSelect(index === 0 ? '' : muscles[index - 1]);
   };
   return (
-    <Paper>
+    <AppBar color="primary" position="sticky">
       <Tabs
         value={index}
         onChange={onIndexSelect}
         variant={width === 'xs' ? 'scrollable' : undefined}
         centered={width !== 'xs'}
         scrollButtons="on"
-        indicatorColor="primary"
-        textColor="primary"
+        indicatorColor="secondary"
+        textColor="secondary"
       >
-        <Tab label="All" />
+        <Tab className={classes.tab} label="All" />
         {muscles.map(group => (
-          <Tab key={group} label={group} />
+          <Tab key={group} label={group} className={classes.tab} />
         ))}
       </Tabs>
-    </Paper>
+    </AppBar>
   );
 };
 
-export default withWidth()(Footer);
+export default withWidth()(withStyles(styles)(Footer));

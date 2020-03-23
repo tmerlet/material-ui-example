@@ -30,7 +30,12 @@ export default class extends Component {
 
     return (
       <>
-        <Fab aria-label="add" size="small" onClick={this.handleToggle}>
+        <Fab
+          aria-label="add"
+          size="small"
+          onClick={this.handleToggle}
+          color="secondary"
+        >
           <AddIcon />
         </Fab>
         <Dialog
