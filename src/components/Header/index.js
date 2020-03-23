@@ -9,14 +9,14 @@ const styles = {
   }
 };
 
-const Header = ({ muscles, onExerciseCreate, classes }) => {
+const Header = ({ classes }) => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h5" className={classes.flex}>
+        <Typography className={classes.flex} variant="h5">
           Exercise Database
         </Typography>
-        <CreateDialog onCreate={onExerciseCreate} muscles={muscles} />
+        <CreateDialog />
       </Toolbar>
     </AppBar>
   );

@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import {
   Grid,
+  IconButton,
   List,
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
   Paper,
-  Typography,
-  IconButton
+  Typography
 } from '@material-ui/core';
 
 import { withStyles } from '@material-ui/styles';
@@ -15,13 +15,15 @@ import { withStyles } from '@material-ui/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
+import { withContext } from '../../context';
+
 import Form from './Form';
 
 const styles = theme => {
   console.log('theme: ', theme);
   return {
     paper: {
-      padding: theme.spacing.unit * 3,
+      padding: theme.spacing(3),
       overflowY: 'auto',
       [theme.breakpoints.up('sm')]: {
         marginTop: 5,
@@ -64,19 +66,19 @@ const Exercises = withStyles(styles)(
       id,
       title = 'Welcome!'
     },
-    exercises,
     category,
+    exercisesByMuscles,
     muscles,
-    onSelect,
-    onSelectEdit,
     onDelete,
-    onEdit
+    onEdit,
+    onSelect,
+    onSelectEdit
   }) => {
     return (
       <Grid container className={classes.container}>
         <Grid item className={classes.item} xs={12} sm={6}>
           <Paper className={classes.paper}>
-            {exercises.map(([group, exercises]) =>
+            {exercisesByMuscles.map(([group, exercises]) =>
               !category || category === group ? (
                 <Fragment key={group}>
                   <Typography
@@ -98,8 +100,8 @@ const Exercises = withStyles(styles)(
                             <DeleteIcon />
                           </IconButton>
                           <IconButton
-                            onClick={() => onSelectEdit(id)}
                             color="primary"
+                            onClick={() => onSelectEdit(id)}
                           >
                             <EditIcon />
                           </IconButton>
@@ -136,4 +138,4 @@ const Exercises = withStyles(styles)(
   }
 );
 
-export default Exercises;
+export default withContext(Exercises);

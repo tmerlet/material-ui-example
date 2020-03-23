@@ -4,14 +4,15 @@ import Header from './Header';
 import Footer from './Footer';
 import Exercises from './Exercises';
 import { muscles, exercises } from '../store';
+import { Provider } from '../context';
 
 class App extends Component {
   state = {
-    exercises,
     categorySelected: '',
-    selectedExerciseId: '',
+    editMode: false,
     exercise: {},
-    editMode: false
+    exercises,
+    selectedExerciseId: ''
   };
 
   getExercisesByGroup = () => {
@@ -33,7 +34,7 @@ class App extends Component {
     );
   };
 
-  handleCategorySelected = category =>
+  handleCategorySelect = category =>
     this.setState({ categorySelected: category });
 
   handleExerciseSelect = id =>
@@ -56,7 +57,7 @@ class App extends Component {
     }));
   };
 
-  onExerciseCreate = exercise =>
+  handleExerciseCreate = exercise =>
     this.setState(({ exercises }) => ({
       exercises: [...exercises, exercise],
       editMode: false,
@@ -70,30 +71,27 @@ class App extends Component {
       exercise: exercise.id === id ? {} : exercises
     }));
 
-  render() {
-    const exercises = this.getExercisesByGroup();
-    const { categorySelected, exercise, editMode } = this.state;
+  getContext = () => ({
+    muscles,
+    ...this.state,
+    exercisesByMuscles: this.getExercisesByGroup(),
+    onCategorySelect: this.handleCategorySelect,
+    onCreate: this.handleExerciseCreate,
+    onDelete: this.handleExerciseDelete,
+    onEdit: this.handleExerciseEdit,
+    onSelect: this.handleExerciseSelect,
+    onSelectEdit: this.handleExerciseSelectEdit
+  });
 
+  render() {
     return (
-      <CssBaseline>
-        <Header muscles={muscles} onExerciseCreate={this.onExerciseCreate} />
-        <Exercises
-          category={categorySelected}
-          editMode={editMode}
-          exercise={exercise}
-          exercises={exercises}
-          muscles={muscles}
-          onDelete={this.handleExerciseDelete}
-          onSelect={this.handleExerciseSelect}
-          onSelectEdit={this.handleExerciseSelectEdit}
-          onEdit={this.handleExerciseEdit}
-        />
-        <Footer
-          muscles={muscles}
-          category={categorySelected}
-          onSelect={this.handleCategorySelected}
-        />
-      </CssBaseline>
+      <Provider value={this.getContext()}>
+        <CssBaseline>
+          <Header />
+          <Exercises />
+          <Footer />
+        </CssBaseline>
+      </Provider>
     );
   }
 }

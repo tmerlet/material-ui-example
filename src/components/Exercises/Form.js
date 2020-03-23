@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {
   Button,
   FormControl,
@@ -38,20 +37,20 @@ export default class extends Component {
     return (
       <form noValidate autoComplete="off">
         <TextField
-          label="Title"
-          value={this.state.title}
-          onChange={this.handleChange('title')}
           fullWidth
+          label="Title"
           margin="normal"
+          onChange={this.handleChange('title')}
+          value={this.state.title}
         />
         <br />
         <FormControl fullWidth margin="normal">
           <InputLabel id="muscles-label">Muscles</InputLabel>
           <Select
-            labelId="muscles-label"
             id="muscles-select"
-            value={this.state.muscles}
+            labelId="muscles-label"
             onChange={this.handleChange('muscles')}
+            value={this.state.muscles}
           >
             {categories.map(muscle => (
               <MenuItem key={muscle} value={muscle}>
@@ -62,23 +61,23 @@ export default class extends Component {
         </FormControl>
         <br />
         <TextField
+          fullWidth
           id="description"
           label="Description"
+          margin="normal"
           multiline
+          onChange={this.handleChange('description')}
           rowsMax="4"
           value={this.state.description}
-          onChange={this.handleChange('description')}
-          fullWidth
-          margin="normal"
         />
         <br />
         <Button
           color="primary"
-          onClick={this.handleSubmit}
-          variant="contained"
           disabled={
             !this.state.title || !this.state.muscles || !this.state.description
           }
+          onClick={this.handleSubmit}
+          variant="contained"
         >
           {exercise ? 'Edit' : 'Create'}
         </Button>

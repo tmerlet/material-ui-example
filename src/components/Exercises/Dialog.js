@@ -6,12 +6,11 @@ import {
   DialogTitle,
   Fab
 } from '@material-ui/core';
-
+import AddIcon from '@material-ui/icons/Add';
+import { withContext } from '../../context';
 import Form from './Form';
 
-import AddIcon from '@material-ui/icons/Add';
-
-export default class extends Component {
+class CreateDialog extends Component {
   state = {
     open: false
   };
@@ -25,25 +24,24 @@ export default class extends Component {
 
   render() {
     const { open } = this.state;
-
     const { muscles } = this.props;
 
     return (
       <>
         <Fab
           aria-label="add"
-          size="small"
-          onClick={this.handleToggle}
           color="secondary"
+          onClick={this.handleToggle}
+          size="small"
         >
           <AddIcon />
         </Fab>
         <Dialog
-          open={open}
-          onClose={this.handleToggle}
           aria-labelledby="form-dialog-title"
           fullWidth
           maxWidth="xs"
+          onClose={this.handleToggle}
+          open={open}
         >
           <DialogTitle id="form-dialog-title">
             Create a new exercise
@@ -57,3 +55,5 @@ export default class extends Component {
     );
   }
 }
+
+export default withContext(CreateDialog);

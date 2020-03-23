@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
 import withWidth from '@material-ui/core/withWidth';
 import { withStyles } from '@material-ui/styles';
+import { withContext } from '../../context';
 
 const styles = theme => ({
   [theme.breakpoints.down('sm')]: {
@@ -11,31 +12,39 @@ const styles = theme => ({
   }
 });
 
-const Footer = ({ category, muscles, onSelect, width, classes }) => {
-  console.log(width);
-  const index = category ? muscles.indexOf(category) + 1 : 0;
-
-  const onIndexSelect = (event, index) => {
-    onSelect(index === 0 ? '' : muscles[index - 1]);
+class Footer extends Component {
+  onIndexSelect = (e, index) => {
+    const { onCategorySelect, muscles } = this.props;
+    onCategorySelect(index === 0 ? '' : muscles[index - 1]);
   };
-  return (
-    <AppBar color="primary" position="sticky">
-      <Tabs
-        value={index}
-        onChange={onIndexSelect}
-        variant={width === 'xs' ? 'scrollable' : undefined}
-        centered={width !== 'xs'}
-        scrollButtons="on"
-        indicatorColor="secondary"
-        textColor="secondary"
-      >
-        <Tab className={classes.tab} label="All" />
-        {muscles.map(group => (
-          <Tab key={group} label={group} className={classes.tab} />
-        ))}
-      </Tabs>
-    </AppBar>
-  );
-};
 
-export default withWidth()(withStyles(styles)(Footer));
+  getIndex = () => {
+    const { category, muscles } = this.props;
+    return category ? muscles.indexOf(category) + 1 : 0;
+  };
+
+  render() {
+    const { muscles, width, classes } = this.props;
+
+    return (
+      <AppBar color="primary" position="sticky">
+        <Tabs
+          centered={width !== 'xs'}
+          indicatorColor="secondary"
+          onChange={this.onIndexSelect}
+          scrollButtons="on"
+          textColor="secondary"
+          value={this.getIndex()}
+          variant={width === 'xs' ? 'scrollable' : undefined}
+        >
+          <Tab className={classes.tab} label="All" />
+          {muscles.map(group => (
+            <Tab className={classes.tab} key={group} label={group} />
+          ))}
+        </Tabs>
+      </AppBar>
+    );
+  }
+}
+
+export default withContext(withWidth()(withStyles(styles)(Footer)));
